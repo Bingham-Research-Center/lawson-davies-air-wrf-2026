@@ -1,0 +1,289 @@
+%=================================================================
+% MDPI "Air" journal manuscript — built from the official MDPI
+% template.tex (journal option: air, ISSN 2813-4168, ACS numbered
+% citations). Filler text stripped; all structural commands kept.
+%
+% REQUIRES the official "Definitions/" folder (mdpi.cls, mdpi.bst,
+% logos) in the project root. Download the latest from
+% https://www.mdpi.com/authors/latex  ->  ACS Citation Style zip.
+% Compiler: pdfLaTeX.
+%=================================================================
+\documentclass[air,article,submit,pdftex,moreauthors]{Definitions/mdpi}
+
+% For an arXiv / preprint posting: switch journal to "preprints" and
+% "submit" to "accept" to drop line numbers, e.g.:
+% \documentclass[preprints,article,accept,pdftex,moreauthors]{Definitions/mdpi}
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+\datereceived{ }
+\daterevised{ }
+\dateaccepted{ }
+\datepublished{ }
+
+%=================================================================
+\Title{Difficult meteorological forecasts during a wintertime surface-ozone IOP}
+
+\newcommand{\orcidauthorA}{0009-0009-9083-6568} % Michael Davies
+\newcommand{\orcidauthorB}{0000-0000-0000-0000} % John Lawson
+
+\Author{Michael J. Davies $^{1,}$*\orcidA{}, John R. Lawson $^{1,2}$, Loknath Dhar $^{1,3}$ and Seth N. Lyman $^{1,3}$}
+
+\AuthorNames{Michael J. Davies, John R. Lawson, Loknath Dhar and Seth N. Lyman}
+
+\address{%
+$^{1}$ \quad Bingham Research Center, Utah State University, Vernal, UT, USA; john.lawson@usu.edu; a02391298@usu.edu; seth.lyman@usu.edu\\
+$^{2}$ \quad Department of Mathematics and Statistics, Utah State University, Logan, UT, USA\\
+$^{3}$ \quad Department of Chemistry and Biochemistry, Utah State University, Logan, UT, USA}
+
+\corres{Correspondence: michael.davies@usu.edu}
+
+\abstract{ABSTRACT}
+
+\keyword{WRF; complex terrain; cold-air pool; numerical weather prediction; Uinta Basin}
+
+%=================================================================
+\begin{document}
+
+\section{Introduction}
+% DRAFT built from Seth's modeling-lineage background. Written as the case
+% the team would make; the competing emissions-inventory view is represented
+% for balance. Revise with Lawson before submission. Confirm every report
+% citation (years/titles) against the actual documents.
+
+Elevated wintertime surface ozone in Utah's Uinta Basin occurs when a
+persistent cold-air pool develops over a snow-covered surface, trapping
+emissions from the region's oil and natural gas industry beneath a strong
+temperature inversion while the high albedo of the snowpack supplies the
+actinic flux needed to drive photochemistry \citep{davies2025snowshadow}.
+Reproducing these episodes in three-dimensional photochemical models has
+proven persistently difficult: simulations of Uinta Basin winters have
+tended to underpredict observed ozone, and the field has advanced two
+broad explanations for the shortfall.
+
+A complicating factor is that the snowpack governing this system is itself
+spatially diverse, and resolving that diversity is central to
+prediction \citep{davies2025snowshadow}. Because the cold pools that
+concentrate ozone are shallow and confined to the basin floor, coarse
+operational models can miss high-ozone events entirely: the national Air
+Quality Model, for instance, runs at roughly 13~km horizontal grid spacing,
+too coarse to capture the small-scale structure of mountain cold pools
+\citep{davies2025snowshadow}. The basin's position leeward of the Wasatch
+Mountains produces a suspected precipitation shadow in which subsiding air suppresses
+snowfall, so snow cover varies sharply across the basin floor; capturing
+that spatial variation is critical to improved prediction, yet the influence
+of terrain on snowfall remains poorly constrained, owing in part to the
+difficulty of high-resolution modeling and to sparse observations across
+this rural region \citep{davies2025snowshadow}. These constraints motivate a
+high-resolution modeling approach.
+
+The first attributes the gap to the emissions inventory. Studies that
+substituted higher, measurement-derived (``top-down'') volatile organic
+compound emissions for bottom-up inventory values were able to reproduce
+the observed 2013 ozone episodes, and concluded that the true emissions
+must exceed inventoried values \citep{ahmadov2015,matichuk2017}. Under this
+view, the limiting factor in earlier simulations was the magnitude of the
+precursor source rather than the representation of the atmosphere.
+
+A second explanation, which motivates the present work, locates the
+problem in the meteorology. If a model fails to build and maintain a
+sufficiently strong inversion, simulated pollutants disperse rather than
+accumulating beneath the cold-air pool, and ozone is underpredicted
+regardless of the inventory used. The earliest WRF study of a Uinta Basin
+cold-air pool established a baseline configuration for representing these
+events \citep{neemann2015}. Building on that configuration,
+\citet{tran2018} sought to improve the simulated meteorology by nudging
+the model toward observed conditions; because surface observations alone
+cannot constrain the warm layer aloft that defines an inversion, that
+approach was later extended using the balloon-borne sonde profiles
+available for the winter of 2013, the only Uinta Basin winter for which
+such vertical data exist \citep{ubaqr2019}. Subsequent coupled
+meteorology--chemistry experiments produced realistic ozone for 2013 under
+certain chemical mechanisms \citep{ubaqr2020}, prompting further work on
+mechanism sensitivity \citep{ramboll2023}. That follow-on work, however,
+relied on a 2019 simulation whose inversion was too weak, limiting its
+utility \citep{topdown2023}; the inadequacy of the 2019 meteorology for
+representing winter inversions was independently noted in later evaluations
+\citep{rmp2022}.
+
+Taken together, this body of work suggests that meteorological
+fidelity---specifically, the model's ability to reproduce the strength and
+persistence of the inversion---is a primary constraint on simulating Uinta
+Basin winter ozone. Here we [STATE THE AIM: e.g., develop and evaluate a
+WRF configuration for the winter 2013 cold-air-pool period, using the 2013
+sonde profiles to constrain the vertical structure, as a meteorological
+basis for subsequent photochemical modeling]. [State principal findings.]
+
+\section{Materials and Methods}
+% Model configuration, domains, data sources, evaluation approach.
+% Disclose any GenAI use here if applicable.
+
+\section{Results}
+
+\subsection{Subsection}
+
+% --- Figure scaffold ---
+% \begin{figure}[H]
+% \includegraphics[width=0.9\linewidth]{figures/fig1.png}
+% \caption{Caption text. Cite as Figure~\ref{fig1}.\label{fig1}}
+% \end{figure}
+
+% --- Wide figure (spans full width) ---
+% \begin{figure}[H]
+% \begin{adjustwidth}{-\extralength}{0cm}
+% \centering
+% \includegraphics[width=\fulllength]{figures/fig2.png}
+% \end{adjustwidth}
+% \caption{Wide figure caption.\label{fig2}}
+% \end{figure}
+
+% --- Table scaffold ---
+% \begin{table}[H]
+% \caption{Caption text. Cite as Table~\ref{tab1}.\label{tab1}}
+% \begin{tabularx}{\textwidth}{CCC}
+% \toprule
+% \textbf{Title 1} & \textbf{Title 2} & \textbf{Title 3}\\
+% \midrule
+% Entry 1 & Data & Data\\
+% \bottomrule
+% \end{tabularx}
+% \end{table}
+
+% --- Equation (keep blank lines around it in submit mode) ---
+% \begin{linenomath}
+% \begin{equation}
+% a = b + c
+% \end{equation}
+% \end{linenomath}
+
+\section{Discussion}
+
+\section{Conclusions}
+
+%=================================================================
+\vspace{6pt}
+
+\authorcontributions{MJD, JRL,L?D,SNL}
+
+\funding{This research was funded by NAME OF FUNDER grant number XXX.}
+
+\institutionalreview{Not applicable.}
+
+\informedconsent{Not applicable.}
+
+\dataavailability{GFS WRF SYNOPTIC HRRR ETC.}
+
+\acknowledgments{shout out to all my homies}
+
+\conflictsofinterest{The authors declare no conflicts of interest.}
+
+%=================================================================
+\begin{adjustwidth}{-\extralength}{0cm}
+
+\reftitle{References}
+
+% Variant A — external BibTeX (recommended). Uncomment to use references.bib:
+% \bibliography{references}
+
+% Variant B — internal list. Air uses ACS numbered style, so entries go in
+% the \isAPAandChicago{}{...} branch below. Cite in text with \citep{key}.
+\isAPAandChicago{}{%
+\begin{thebibliography}{999}
+
+\bibitem[Davies et al.(2025)]{davies2025snowshadow}
+Davies, M.J.; Lawson, J.R.; O'Neil, T.; Lyman, S.N.; Zager, K.; Coxson, T.D.
+Uinta Basin Snow Shadow: Impact of Snow-Depth Variation on Winter Ozone
+Formation. {\em Air} {\bf 2025}, {\em 3}, 22.
+\url{https://doi.org/10.3390/air3030022}.
+
+% --- Emissions-inventory explanation (published) ---
+\bibitem[Ahmadov et al.(2015)]{ahmadov2015}
+Ahmadov, R.; McKeen, S.; Trainer, M.; Banta, R.; Brewer, A.; Brown, S.;
+Edwards, P.M.; de Gouw, J.A.; Frost, G.J.; Gilman, J.; et al.
+Understanding high wintertime ozone pollution events in an oil- and
+natural gas-producing region of the western US. {\em Atmos.\ Chem.\ Phys.}
+{\bf 2015}, {\em 15}, 411--429. \url{https://doi.org/10.5194/acp-15-411-2015}.
+
+\bibitem[Matichuk et al.(2017)]{matichuk2017}
+Matichuk, R.; Tonnesen, G.; Luecken, D.; Gilliam, R.; Napelenok, S.L.;
+Baker, K.R.; Schwede, D.; Murphy, B.; Helmig, D.; Lyman, S.; Roselle, S.
+Evaluation of the Community Multiscale Air Quality Model for Simulating
+Winter Ozone Formation in the Uinta Basin. {\em J.\ Geophys.\ Res.\ Atmos.}
+{\bf 2017}, {\em 122}, 13545--13572.
+\url{https://doi.org/10.1002/2017JD027057}.
+
+% --- Meteorology explanation (published) ---
+\bibitem[Neemann et al.(2015)]{neemann2015}
+Neemann, E.M.; Crosman, E.T.; Horel, J.D.; Avey, L. Simulations of a
+cold-air pool associated with elevated wintertime ozone in the Uintah
+Basin, Utah. {\em Atmos.\ Chem.\ Phys.} {\bf 2015}, {\em 15}, 135--151.
+\url{https://doi.org/10.5194/acp-15-135-2015}.
+
+\bibitem[Tran et al.(2018)]{tran2018}
+Tran, T.; Tran, H.; Mansfield, M.; Lyman, S.; Crosman, E. Four-dimensional
+data assimilation (FDDA) impacts on WRF performance in simulating inversion
+layer structure and distributions of CMAQ-simulated winter ozone
+concentrations in Uintah Basin. {\em Atmos.\ Environ.} {\bf 2018}, {\em 177},
+75--92. \url{https://doi.org/10.1016/j.atmosenv.2018.01.012}.
+
+% --- USU / DAQ technical reports (unpublished; VERIFY titles, years, page
+%     ranges, and authorship against the actual documents before submission)
+\bibitem[Lyman et al.(2019)]{ubaqr2019}
+Lyman, S.; et al. {\em Uintah Basin Air Quality Research 2019 Annual
+Report}; Section~8; Bingham Research Center, Utah State University: Vernal,
+UT, USA, 2019.
+
+\bibitem[Lyman et al.(2020)]{ubaqr2020}
+Lyman, S.; et al. {\em Uintah Basin Air Quality Research 2020 Annual
+Report}; Section~5; Bingham Research Center, Utah State University: Vernal,
+UT, USA, 2020.
+
+\bibitem[Ramboll and USU(2023)]{ramboll2023}
+Ramboll; Utah State University. {\em Assessing Wintertime Ozone Prediction
+Sensitivity to Photochemical Mechanism}; Technical report prepared for the
+Utah Division of Air Quality; 2023.
+
+\bibitem[Lyman et al.(2023a)]{topdown2023}
+Lyman, S.; et al. {\em Top-Down Emission Inventory Final Report}; Sections~9.6
+and~9.7; Bingham Research Center, Utah State University: Vernal, UT, USA, 2023.
+
+\bibitem[David et al.(2022)]{rmp2022}
+David, L.; et al. {\em Rocky Mountain Power Final Report}; Section~III.B;
+Bingham Research Center, Utah State University: Vernal, UT, USA, 2022.
+
+\bibitem[Skamarock et al.(2021)]{skamarock2021wrf}
+Skamarock, W.C.; Klemp, J.B.; Dudhia, J.; Gill, D.O.; Liu, Z.; Berner, J.;
+Wang, W.; Powers, J.G.; Duda, M.G.; Barker, D.M.; Huang, X.-Y.
+A Description of the Advanced Research WRF Model Version 4.3;
+NCAR Technical Note NCAR/TN-556+STR; National Center for Atmospheric
+Research: Boulder, CO, USA, 2021.
+\url{https://doi.org/10.5065/1dfh-6p97}.
+
+\bibitem[NCEP(2019)]{ncep2019gfs}
+National Centers for Environmental Prediction (NCEP).
+The Global Forecast System (GFS)---Global Spectral Model (GSM)
+Version 15.1; Environmental Modeling Center, NCEP/NOAA: College Park,
+MD, USA, 2019. Available online:
+\url{https://www.emc.ncep.noaa.gov/emc/pages/numerical_forecast_systems/gfs.php}
+(accessed on \today).
+
+\bibitem[Mansfield and Lyman(2021)]{mansfield2021ozone}
+Mansfield, M.L.; Lyman, S.N. Winter ozone pollution in Utah's Uinta Basin
+is attenuating. {\em Atmosphere} {\bf 2021}, {\em 12}, 4.
+\url{https://doi.org/10.3390/atmos12010004}.
+
+\end{thebibliography}
+}
+
+\PublishersNote{}
+\end{adjustwidth}
+\end{document}
