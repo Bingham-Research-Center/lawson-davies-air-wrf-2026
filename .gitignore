@@ -1,0 +1,26 @@
+## LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.spl
+*.synctex.gz
+*.toc
+
+## NOTE: the rendered main.pdf is intentionally TRACKED (see README) — not ignored.
+## Auto-generated EPS->PDF logo conversions from the build ARE ignored:
+*-eps-converted-to.pdf
+
+## Editor / OS cruft
+*.swp
+.DS_Store
+
+## Personal, per-machine Claude settings (shared .claude/settings.json stays tracked)
+.claude/settings.local.json
