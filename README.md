@@ -18,7 +18,8 @@ meteorological fidelity as a basis for photochemical modeling.
 ## Build
 - **Overleaf** (primary) — this repo is linked; just recompile in the GUI.
 - **Local** (TinyTeX + Ghostscript): `latexmk -pdf main.tex`
-  - manual fallback: `pdflatex main && bibtex main && pdflatex main && pdflatex main`
+  - manual fallback (current inline-bib setup): `pdflatex main && pdflatex main` (add `bibtex main`
+    between passes only after switching to the external `references.bib`)
 - Engine: **pdfLaTeX + BibTeX** (not XeLaTeX). A fairly complete TeX is needed
   (`tlmgr install collection-latexextra collection-fontsrecommended`) plus **Ghostscript** (`gs`) to
   embed the EPS logos; without `gs` the PDF still builds but the logos show as draft boxes.
@@ -30,9 +31,10 @@ meteorological fidelity as a basis for photochemical modeling.
 - The **MDPI Air template is locked** — fill in content; don't restyle layout or macros, and don't
   edit `Definitions/`.
 - **Citations:** the inline list in `main.tex` is currently authoritative; `references.bib` is not yet
-  connected, so don't cite from it yet. MDPI mandates its own numbered style (`mdpi.bst`) — we do
-  **not** use AMS here, even though that's the usual house default. Verify every tech-report citation
-  against the source document; never invent one.
+  connected, so don't cite from it yet. The target is MDPI's numbered (ACS) style — the inline list is
+  hand-formatted to it, and `mdpi.bst` applies only with the external BibTeX variant. We do **not** use
+  AMS here, even though that's the usual house default. Verify every tech-report citation against the
+  source document; never invent one.
 - **Disclose any generative-AI use** in the Methods section.
 
 ## Working in this repo

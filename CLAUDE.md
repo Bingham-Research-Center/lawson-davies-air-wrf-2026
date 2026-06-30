@@ -23,7 +23,8 @@ official MDPI LaTeX template. Public repo under `Bingham-Research-Center`. Coaut
 House SOP (cf. sibling repos `latex-nsf-dprog`, `ffion-preprint`): **Overleaf is primary** (linked to
 this repo). Local fallback on any host with TinyTeX:
 - `latexmk -pdf main.tex`   (preferred)
-- manual: `pdflatex main && bibtex main && pdflatex main && pdflatex main`
+- manual (current inline bib): `pdflatex main && pdflatex main` — no BibTeX pass needed yet; add
+  `bibtex main` between passes only once the external `references.bib` is wired in
 
 Engine = **pdfLaTeX + BibTeX** (`pdftex` documentclass option; `mdpi.bst`) — NOT XeLaTeX/biber (that's
 other repos). Don't hand-edit compiled artefacts; build output is git-ignored.
@@ -38,10 +39,12 @@ Rendered output: `main.pdf` **is tracked** (a key reviewable document). Intermed
 copy milestones to `drafts/main_<date>_<label>.pdf` before overwriting. Don't hand-edit artefacts.
 
 ## Bibliography
-- Source of truth **today** = the inline `thebibliography` in `main.tex` (ACS-numbered, `mdpi.bst`).
-  `references.bib` is stale/unused — keep them from drifting; don't cite from the `.bib` until migrated.
-- MDPI Air **mandates** `mdpi.bst`. Do NOT switch this repo to AMS (`ametsocV6.bst`) — AMS is the
-  house default elsewhere, not here.
+- Source of truth **today** = the inline `thebibliography` in `main.tex`, hand-formatted to MDPI's
+  numbered (ACS) style. `references.bib` is stale/unused — keep them from drifting; don't cite from
+  the `.bib` until migrated.
+- `mdpi.bst` only takes effect **if/when** you switch to the external BibTeX variant; it is not used
+  by the inline list. Either way, do NOT use AMS (`ametsocV6.bst`) here — that's the house default
+  elsewhere, not for MDPI.
 - Planned migration (later, not now): Paperpile export → `references.bib` → `\bibliography{references}`.
 - Verify tech-report citations (years, titles, sections) against the actual documents before
   submission — flagged in `main.tex`. Never invent citations.
