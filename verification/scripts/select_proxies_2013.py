@@ -86,8 +86,19 @@ def main() -> None:
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
-    start_d = dt.datetime.strptime(args.start, "%Y-%m-%d %H:%M").date()
-    end_d = dt.datetime.strptime(args.end, "%Y-%m-%d %H:%M").date()
+    def parse_case_date(s: str) -> dt.date:
+        s = s.strip()
+        for fmt in ("%Y-%m-%d %H:%M", "%Y-%m-%d %HZ", "%Y-%m-%d %H:%MZ"):
+            try:
+                return dt.datetime.strptime(s, fmt).date()
+            except ValueError:
+                pass
+        raise ValueError(
+            f"Invalid datetime '{s}'. Expected 'YYYY-MM-DD HH:MM' or 'YYYY-MM-DD HHZ'."
+        )
+
+    start_d = parse_case_date(args.start)
+    end_d = parse_case_date(args.end)
 
     rows = []
     for var, use in PROXIES.items():
