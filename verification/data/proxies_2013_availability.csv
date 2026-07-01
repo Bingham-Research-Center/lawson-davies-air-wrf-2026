@@ -1,0 +1,7 @@
+variable,proxies_for,n_sense,n_por_covers_2013,n_real_data,n_obs,usable,stations
+snow_water_equiv,snowpack / albedo (cold-pool forcing),25,23,23,1679,true,"BLJU1,BNDU1,CWHU1,EFBU1,FPLU1,HEWU1,HFKU1,HIRU1,HPSU1,ICYU1,KGCU1,LBNU1,LFKU1,LKFU1,LLKU1,MMTU1,MRHU1,RCKU1,SCKU1,SPKU1,STLU1,TCKU1,TLNU1"
+snow_depth,snow depth,59,27,23,1676,true,"BLJU1,BNDU1,CWHU1,EFBU1,FPLU1,HEWU1,HFKU1,HIRU1,HPSU1,ICYU1,KGCU1,LBNU1,LFKU1,LKFU1,LLKU1,MMTU1,MRHU1,RCKU1,SCKU1,SPKU1,STLU1,TCKU1,TLNU1"
+solar_radiation,downward shortwave -> cloud cover,72,39,25,3719,true,"A1622,A1633,BLAU1,BRAU1,BRPU1,CCRU1,DIAU1,FIVU1,HSRU1,HWAU1,KPRU1,LRFU1,MHMU1,PCEU1,SFLU1,SPMU1,UINU1,UPRU1,USWU1,UTICS,UTSTV,UUT01,WHBU1,WNTU1,YLSU1"
+visibility,fog / inversion strength,22,7,3,1055,true,"K74V,KPUC,KVEL"
+ozone_concentration,AQ target,20,8,0,0,false,""
+PM_25_concentration,AQ target,18,3,0,0,false,""
