@@ -30,7 +30,10 @@ def main() -> None:
     present = sorted(df.get_column("stid").unique().to_list())
     print("present:", present)
     if args.expected:
-        print("absent (expected):", [s for s in args.expected if s not in present])
+        absent = [s for s in args.expected if s not in present]
+        print("absent (expected):", absent)
+        if absent:
+            raise SystemExit(2)
 
     aggs = [pl.len().alias("n")]
     for v in ("temp_2m", "pressure_surface", "wind_speed_10m"):
