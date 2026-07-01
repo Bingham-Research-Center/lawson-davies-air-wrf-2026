@@ -1,7 +1,7 @@
 # CLAUDE.md — lawson-davies-air-wrf-2026
 
 MDPI **Air** manuscript: *"Difficult meteorological forecasts during a wintertime surface-ozone IOP"*
-(Davies, Lawson, Dhar, Lyman). WRF / Uinta Basin winter ozone / cold-air pool. Built from the
+(Lawson, Davies, Dhar, Lyman). WRF / Uinta Basin winter ozone / cold-air pool. Built from the
 official MDPI LaTeX template. Public repo under `Bingham-Research-Center`. Coauthors may all use Claude.
 
 ## Read these (source of truth)
@@ -61,10 +61,10 @@ copy milestones to `drafts/main_<date>_<label>.pdf` before overwriting. Don't ha
 - **Overleaf GUI** — linked to this repo; GUI edits sync to `main`.
 
 ## Git / collaboration
-- Coauthors: MJD (corresponding), JRL (lead), LD, SNL. Only BRC collaborators can push branches.
+- Coauthors (manuscript order): JRL (lead + corresponding), MJD, LD, SNL. Only BRC collaborators can push branches.
 - Branch `<initials>/<topic>`; PR into `main`. `main` is **protected** (PR required; admins bypass).
-- `origin/mjdavies` holds unmerged 2013-baseline-verification work (writeup/scripts/figures/scores) —
-  review/merge is a separate task.
+- 2013-baseline-verification work (writeup/scripts/figures/scores) is merged into `main` under
+  `verification/` (PR #1). Reproduce-script fixes are tracked in issue #3.
 - Repo is **public** (visible to anyone; only collaborators can write).
 - Overleaf caveat: syncs to `main`; admin pushes bypass protection. If sync ever fails, point Overleaf
   at an `overleaf` branch and PR into `main`.
