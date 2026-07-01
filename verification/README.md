@@ -45,7 +45,7 @@ python verification/scripts/verify_pull.py \
 PYTHONPATH=~/brc-tools python verification/scripts/plot_obs_feb0102.py
 ```
 
-### Observed-case figures (`plot_obs_feb0102.py` -> `data/figures/*_feb0102.png`)
+### Observed-case figures (`plot_obs_feb0102.py` -> `data/figures/*_feb0102.{png,pdf}`; the PDFs are the vector versions for the LaTeX manuscript)
 Conventions follow Neemann et al. 2015 (ACP 15 — the same 31 Jan-6 Feb 2013 case), Lyman & Tran 2015 (Figs. 5/7/8), and Whiteman & Hoch 2014 (pseudo-vertical profiles); all three are in `references.bib`.
 
 - `obs_theta_profiles_feb0102.png` — pseudo-vertical θ-vs-elevation profiles at six snapshot times (9 pressure-reporting stations). θ, not raw T, so inversion strength reads directly; midday panels are the most free-air-representative (Whiteman & Hoch caveat).
