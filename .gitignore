@@ -27,3 +27,6 @@
 
 ## Obs data — bulk timeseries kept LOCAL, never committed (small result/score CSVs stay tracked)
 *.parquet
+
+## Python bytecode
+__pycache__/
