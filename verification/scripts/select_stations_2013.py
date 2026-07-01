@@ -96,7 +96,7 @@ def main() -> None:
     with pl.Config(tbl_rows=30, tbl_cols=12, fmt_str_lengths=32):
         print(tbl)
 
-    kept = tbl.filter("in_case_window").get_column("stid").to_list()
+    kept = tbl.filter(pl.col("in_case_window")).get_column("stid").to_list()
     dropped = tbl.filter(~pl.col("in_case_window")).get_column("stid").to_list()
     print(f"\nrecommended for {args.start} .. {args.end} (by elevation): {kept}")
     if dropped:
