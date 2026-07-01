@@ -220,7 +220,12 @@ def fig_inversion_index(hourly: pl.DataFrame, names: dict) -> None:
         trapz = getattr(np, "trapezoid", np.trapz)
         h = float(trapz(deficit, z)) / 1e6  # MJ m-2
         rows.append({"hour_mst": t, "heat_deficit": h})
-    hd = pl.DataFrame(rows).sort("hour_mst")
+    hd = pl.DataFrame(
+        rows,
+        schema={"hour_mst": pl.Datetime, "heat_deficit": pl.Float64},
+    ).sort("hour_mst")
+    if hd.is_empty():
+        raise ValueError("No heat-deficit profiles computed (need >=5 theta stations incl. USU03).")
 
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 6.5), sharex=True)
     ax1.plot(dth["hour_mst"], dth["dtheta"], color="#00224e", lw=1.8)
