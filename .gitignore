@@ -24,3 +24,6 @@
 
 ## Personal, per-machine Claude settings (shared .claude/settings.json stays tracked)
 .claude/settings.local.json
+
+## Obs data — bulk timeseries kept LOCAL, never committed (small result/score CSVs stay tracked)
+*.parquet
