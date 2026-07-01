@@ -1,6 +1,6 @@
 # Difficult meteorological forecasts during a wintertime surface-ozone IOP
 
-MDPI **Air** manuscript — Davies, Lawson, Dhar & Lyman (Bingham Research Center, Utah State University).
+MDPI **Air** manuscript — Lawson, Davies, Dhar & Lyman (Bingham Research Center, Utah State University).
 A WRF evaluation of a Uinta Basin wintertime cold-air-pool / surface-ozone episode, toward improved
 meteorological fidelity as a basis for photochemical modeling.
 

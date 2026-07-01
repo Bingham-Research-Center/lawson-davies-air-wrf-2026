@@ -70,7 +70,12 @@ Procedure is set: rerun the **same pipeline** on an improved config and compare 
 python scripts/reduce_wrf_to_stations.py \
   --wrf-dir /scratch/general/vast/u6060939/wrf_trang_2013 \
   --glob 'wrfout_d03_2013-01-*' --out data/wrf_trang_2013_per_station.csv
-python scripts/case_study_2013_obs.py            # -> data/obs_basin_2013_jan1521.parquet
+# [ISSUE #3: BROKEN as written -- no-arg case_study_2013_obs.py uses stale Feb defaults
+#  and writes obs_basin_2013_stids2013.parquet, NOT the jan1521 file below. Needs the
+#  explicit Jan 15-21 window + --out (Michael to finalize):]
+python scripts/case_study_2013_obs.py \
+  --start "[JAN-2013-START -- see #3]" --end "[JAN-2013-END -- see #3]" \
+  --out data/obs_basin_2013_jan1521.parquet
 python scripts/verify_baseline.py \
   --wrf data/wrf_trang_2013_per_station.csv \
   --obs data/obs_basin_2013_jan1521.parquet \

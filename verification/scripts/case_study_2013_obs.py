@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Pull Uinta Basin station obs for the 2013 wintertime-ozone case study.
 
+[KNOWN ISSUE #3 -- STALE MONTH: the DEFAULT_START/END below and the "Feb 2013"
+wording in this docstring are stale; the baseline case was realigned to Jan 15-21
+2013 (see baseline-eval-2013.md sec. 2). Do NOT run no-arg -- the defaults are
+placeholdered pending Michael's fix.]
+
 Exercises the ObsSource path (previously untested in brc-tools, PR #16) and
 produces a tidy obs frame for WRF verification against the validated Feb-2013
 Basin run.
@@ -39,8 +44,12 @@ from brc_tools.obs import ObsSource
 # Curated 2013-era basin-floor stations (verified to return Feb-2013 data).
 BASIN_2013 = ["USU01", "USU05", "USU08", "UUT01", "KVEL", "QV4", "QRS"]
 
-DEFAULT_START = "2013-02-01 00Z"
-DEFAULT_END = "2013-02-15 00Z"
+# [ISSUE #3: stale Feb window -- the baseline case is Jan 15-21 2013, not February.
+#  Placeholdered so a no-arg run fails loudly instead of silently producing February
+#  obs. Pass explicit --start/--end, or set the Jan window here (Michael).
+#  Prior values: START="2013-02-01 00Z", END="2013-02-15 00Z".]
+DEFAULT_START = "[SET-JAN-2013-START -- see #3]"
+DEFAULT_END = "[SET-JAN-2013-END -- see #3]"
 MET_VARS = [
     "temp_2m", "dewpoint_2m", "rh_2m", "wind_speed_10m",
     "wind_dir_10m", "pressure_surface", "snow_depth",
