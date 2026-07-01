@@ -205,7 +205,8 @@ def fig_inversion_index(hourly: pl.DataFrame, names: dict) -> None:
 
     # Valley heat deficit from the station pseudo-profile (trapezoid over elevation).
     rows = []
-    for (t,), grp in th.group_by("hour_mst"):
+    for key, grp in th.group_by("hour_mst"):
+        t = key[0] if isinstance(key, tuple) else key
         grp = grp.sort("elev_m")
         if grp.height < 5 or top not in grp["stid"].to_list():
             continue
