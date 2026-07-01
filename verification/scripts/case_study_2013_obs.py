@@ -14,10 +14,10 @@ IMPORTANT — station-ID drift: the lookups.toml waypoint_groups are built for t
 *modern* network, and most of those STIDs (UB7ST, UBHSP, A3822, ...) have NO 2013
 data. In Feb 2013 the BRC research network reported under USU01-USU08 / UUT01, so
 this script defaults to a curated 2013-era station list (BASIN_2013) instead of a
-group. Verified to return data for Feb 2013:
-    USU01 Seven Sisters · USU05 Wells Draw · USU08 Research Trailer · UUT01 Basin
-    Research Trailer · KVEL Vernal Airport (full met incl. pressure)
-    QV4 Vernal · QRS Roosevelt (UDOT: temp/wind, NO surface pressure)
+group. BASIN_2013 covers the 7 Tran et al. (2018) eval sites (USU01-USU07) plus
+context (USU08/UUT01 research trailers, KVEL/QV4/QRS; KVEL carries surface pressure,
+UDOT QV4/QRS do not). See select_stations_2013.py for the site->STID mapping and a
+per-window availability check (e.g. USU06 Sand Wash is offline over Feb 1-2 2013).
 
 Examples:
     python scripts/case_study_2013_obs.py
@@ -41,8 +41,14 @@ import polars as pl
 
 from brc_tools.obs import ObsSource
 
-# Curated 2013-era basin-floor stations (verified to return Feb-2013 data).
-BASIN_2013 = ["USU01", "USU05", "USU08", "UUT01", "KVEL", "QV4", "QRS"]
+# Curated 2013-era basin stations: the 7 Tran et al. (2018) eval sites (USU01-USU07,
+# temporary BRC study-period stations) + context (USU08/UUT01 trailers, KVEL/QV4/QRS).
+# See select_stations_2013.py for the mapping + case-window availability. USU06 has a
+# Feb 1-2 data gap (offline Jan 28-Feb 4) but is kept here for other 2013 windows.
+BASIN_2013 = [
+    "USU01", "USU02", "USU03", "USU04", "USU05", "USU06", "USU07",  # Tran 2018 eval sites
+    "USU08", "UUT01", "KVEL", "QV4", "QRS",                          # context (KVEL = pressure)
+]
 
 # [ISSUE #3: stale Feb window -- the baseline case is Jan 15-21 2013, not February.
 #  Placeholdered so a no-arg run fails loudly instead of silently producing February
