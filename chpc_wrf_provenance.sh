@@ -29,6 +29,16 @@ WRF_SUBTREES=(
 )
 WRFOUT_CAP_MB=800                 # fallback: skip auto-download if the smallest d03 exceeds this
 MAX_CAT=4                         # cat at most this many namelists of each kind
+# Run-namelist candidates identified from the 2026-07-01 dig. The revised_nudge_d03 pair have
+# grid_fdda=1 => the analysis-nudged ("anlnudge") baseline config (Feb-dated file, same setup as the
+# scored Jan 15-21 d03 output); USGS33_frozone is the no-nudge "frozone" physics variant.
+KNOWN_NAMELISTS=(
+  "${ARCHIVE}trang_homebk_MAy2021/WRF3.9/namelist.input_revised_nudge_d03"
+  "${ARCHIVE}trang_homebk_29July2020/WRF3.9/namelist.input_revised_nudge_d03"
+  "${ARCHIVE}trang_homebk_MAy2021/WRF_HUY19/WRF/run_HEI/namelist.input_USGS33_frozone"
+)
+# Backups to scan for the matching WPS namelist (names the forcing via prefix / fg_name):
+WPS_SCAN_ROOTS=( "${ARCHIVE}trang_homebk_MAy2021/WRF3.9" "${ARCHIVE}trang_homebk_29July2020/WRF3.9" )
 # ----------------------------------------------------------------------
 
 hdr(){ printf '\n══════════════════ %s ══════════════════\n' "$*"; }
@@ -130,6 +140,23 @@ else
     rm -rf "$tmp"
   fi
 fi
+
+hdr "6 · DUMP the identified run-namelist candidates (regenerates namelist_candidates.txt)"
+for nl in "${KNOWN_NAMELISTS[@]}"; do
+  echo "########## $nl ##########"
+  rclone cat "$nl" 2>/dev/null || echo "(cat failed — path moved; re-run section 1 to relocate)"
+  echo
+done
+
+hdr "6b · FORCING — prefix/fg_name from the real WPS namelists (names GFS/ERA/FNL/NARR)"
+for root in "${WPS_SCAN_ROOTS[@]}"; do
+  rclone lsf -R --fast-list "$root/" 2>/dev/null \
+    | grep -iE 'namelist\.wps$' | grep -viE 'geogrid|/util/|/test/|WRFDA' \
+    | while IFS= read -r w; do
+        echo "-- $root/$w"
+        rclone cat "$root/$w" 2>/dev/null | grep -iE 'prefix|fg_name|start_date|end_date|interval_seconds' | sed 's/^/    /'
+      done
+done
 
 hdr "SUMMARY"
 echo "namelist.input found : $( [ -n "$NLI_LIST" ] && echo YES || echo NO )"
