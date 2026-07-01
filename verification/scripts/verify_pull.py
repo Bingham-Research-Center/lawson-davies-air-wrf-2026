@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verification gate on a pulled obs parquet (see docs/how-to-obs-verify.md).
+"""Verification gate on a pulled obs parquet (see verification/README.md).
 
 Confirms station coverage and that temp/pressure/wind units are physical, before the
 obs are trusted for scoring. Obs data stays LOCAL -- pass the parquet path; this
