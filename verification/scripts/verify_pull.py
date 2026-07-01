@@ -39,6 +39,21 @@ def main() -> None:
                 pl.col(v).min().round(1).alias(f"{v}_min"),
                 pl.col(v).max().round(1).alias(f"{v}_max"),
             ]
+    # Unit sanity: fail fast if values look like the wrong units (e.g., K vs °C, hPa vs Pa).
+    ranges = {
+        "temp_2m": (-80.0, 60.0),              # °C
+        "pressure_surface": (7.5e4, 1.1e5),    # Pa
+        "wind_speed_10m": (0.0, 60.0),         # m/s
+    }
+    bad = []
+    for col, (lo, hi) in ranges.items():
+        if col in df.columns:
+            mn, mx = df.select(pl.col(col).min(), pl.col(col).max()).row(0)
+            if (mn is not None and mn < lo) or (mx is not None and mx > hi):
+                bad.append(f"{col} min={mn} max={mx} (expected {lo}..{hi})")
+    if bad:
+        raise SystemExit("unit sanity check failed: " + "; ".join(bad))
+
     summ = df.group_by("stid").agg(aggs).sort("stid")
     with pl.Config(tbl_rows=30, tbl_cols=12):
         print(summ)
