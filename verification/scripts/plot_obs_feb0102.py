@@ -138,8 +138,8 @@ def fig_theta_profiles(hourly: pl.DataFrame, names: dict) -> None:
         for i, (th, ev, st) in enumerate(zip(prof["theta"], elev, prof["stid"])):
             ax.scatter(th, ev, s=42, color=elev_color(ev), zorder=2, edgecolor="white", lw=0.6)
             if snap == SNAPSHOTS_MST[0]:
-                # Stations cluster near 1550-1620 m; alternate label side and nudge
-                # vertically by index so names don't collide.
+                # Stations cluster near 1550-1620 m; alternate label side and add a small
+                # offset so names are less likely to collide.
                 side = 1 if i % 2 == 0 else -1
                 ax.annotate(
                     names[st]["name"], (th, ev),
