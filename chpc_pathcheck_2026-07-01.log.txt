@@ -1,0 +1,179 @@
+
+══════════════════ 0 · ENVIRONMENT ══════════════════
+host=notch137  user=u0737349  date=Wed Jul  1 00:38:47 MDT 2026
+uid=808826(u0737349) gid=4001165(lawson) groups=4001165(lawson),2327(usu)
+rclone: /uufs/chpc.utah.edu/sys/installdir/rclone/1.68.2/bin/rclone  [rclone v1.68.2]
+ncdump: /uufs/chpc.utah.edu/sys/spack/v019/linux-rocky8-nehalem/gcc-8.5.0/netcdf-c-4.9.0-j35un2e5nvcq73kail755qni6ak6tanj/bin/ncdump
+git:    /usr/bin/git
+
+══════════════════ A · SCRATCH STAGING  (Trang wrfout, as read by Michael's pipeline) ══════════════════
+[FOUND]   scratch wrf dir                          /scratch/general/vast/u6060939/wrf_trang_2013
+drwxr-xr-x 2 u6060939 lawson 4.0K Jun 22 11:13 /scratch/general/vast/u6060939/wrf_trang_2013
+
+---- who owns the uNID in this path?  (resolves 'u6060939 = who') ----
+owner(stat) = u6060939   uNID-in-path = u6060939
+u6060939:*:1745190:4001165:Michael Davies:/uufs/chpc.utah.edu/common/home/u6060939:/bin/bash
+
+---- wrfout_d03 files: count / first / last / total size ----
+count: 0
+90K	/scratch/general/vast/u6060939/wrf_trang_2013
+
+---- anything else staged?  (namelists / logs / met_em / per-station csv) ----
+wrf_trang_2013_per_station.csv
+
+══════════════════ B · brc-tools  (verification lib + the outputs the plots read) ══════════════════
+[MISSING] brc-tools repo                           /uufs/chpc.utah.edu/common/home/u0737349/brc-tools
+
+══════════════════ C · ARCHIVE REMOTE  (Loknath's rclone 'archive:') ══════════════════
+
+---- configured remotes  (confirm 'archive:' is real / its true name) ----
+archive:
+
+---- top level of archive: ----
+2026/07/01 00:38:48 NOTICE: s3: s3 provider "" not known - please set correctly
+          -1 2018-02-08 11:14:23        -1 3SDW
+          -1 2021-03-16 10:21:25        -1 ARMS17_input
+          -1 2022-03-30 13:10:37        -1 ARMS2017
+          -1 2020-08-13 16:03:54        -1 CAMx_ARMS17
+          -1 2018-10-24 08:31:32        -1 HUY
+          -1 2020-10-26 09:48:06        -1 SMOKE_ARMS2017
+          -1 2022-04-12 06:35:27        -1 Sattelite
+          -1 2019-04-19 14:17:45        -1 WPS_ARMS2017
+          -1 2019-04-12 15:47:19        -1 WRF_ARMS17
+          -1 2021-12-06 18:39:21        -1 WRF_UB_OSIP
+          -1 2021-05-18 11:08:23        -1 ldavid
+          -1 2018-04-09 11:37:43        -1 trang
+          -1 2022-01-18 15:38:03        -1 trang_G2
+          -1 2022-01-20 11:25:21        -1 trang_G3
+          -1 2022-06-13 15:43:14        -1 trang_G4
+          -1 2021-05-25 11:32:44        -1 trang_G5
+          -1 2020-07-28 11:34:39        -1 trang_homebk_29July2020
+          -1 2021-05-17 10:49:55        -1 trang_homebk_MAy2021
+          -1 2018-10-30 11:17:29        -1 trang_sound
+
+---- Trang subtree — locate WRFOUT / WRF_TRANG_frozone / WRF_anlnudge / namelists ----
+CAMx.namelist.template
+WRFOUT/
+input_frozone/
+run_PA_anlnudge/
+G4130131_adapt_ksp_CBO5_mod/wrfout_d01_2013-01-31_00:00:00
+CAMx_old/input_frozone/
+CAMx_old/run_PA_anlnudge/
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-01-31_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-01-31_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-02-01_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-02-01_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-02-02_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-02-02_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-02-03_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-02-03_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM/wrfout_d01_2013-02-04_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM_cont/wrfout_d01_2013-02-04_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM_cont/wrfout_d01_2013-02-04_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad_emis_norm_RACM_cont/wrfout_d01_2013-02-05_00:00:00
+G4130131_adapt_notch_CBO5_mod_cont/wrfout_d01_2013-02-02_12:00:00
+G4130131_adapt_notch_RACM_mod/wrfout_d01_2013-01-31_00:00:00
+G4130131_adapt_notch_RACM_mod/wrfout_d01_2013-01-31_12:00:00
+G4130131_adapt_notch_RACM_mod/wrfout_d01_2013-02-01_00:00:00
+G4130131_adapt_notch_RACM_mod/wrfout_d01_2013-02-01_12:00:00
+G4130131_adapt_notch_RACM_mod/wrfout_d01_2013-02-02_00:00:00
+G4130131_adapt_notch_RACM_mod/wrfout_d01_2013-02-02_12:00:00
+G4130131_adapt_notch_RACM_mod/wrfout_d01_2013-02-03_00:00:00_bk
+G4130131_adapt_notch_RACM_mod_cont/wrfout_d01_2013-02-03_00:00:00
+G4130131_adapt_notch_RACM_mod_cont/wrfout_d01_2013-02-03_12:00:00
+G4130131_adapt_notch_RACM_mod_cont/wrfout_d01_2013-02-04_00:00:00
+G4130131_adapt_notch_RACM_mod_cont/wrfout_d01_2013-02-04_12:00:00
+G4130131_adapt_notch_RACM_mod_cont/wrfout_d01_2013-02-05_00:00:00
+G4130131_adapt_ksp_CBO5_mod_1node/wrfout_d01_2013-01-31_00:00:00
+G4130131_adapt_notch_emisCB6r_to_RACM/wrfout_d01_2013-01-31_00:00:00
+G4130131_adapt_notch_emisCB6r_to_RACM/wrfout_d01_2013-01-31_12:00:00
+G4130131_adapt_notch_emisCB6r_to_RACM/wrfout_d01_2013-02-01_00:00:00
+G4130131_adapt_notch_CBO5_mod/wrfout_d01_2013-01-31_00:00:00
+G4130131_adapt_notch_CBO5_mod/wrfout_d01_2013-01-31_12:00:00
+G4130131_adapt_notch_CBO5_mod/wrfout_d01_2013-02-01_00:00:00
+G4130131_adapt_notch_CBO5_mod/wrfout_d01_2013-02-01_12:00:00
+G4130131_adapt_notch_CBO5_mod/wrfout_d01_2013-02-02_00:00:00
+G4130131_adapt_notch_CBO5_mod/wrfout_d01_2013-02-02_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad/wrfout_d01_2013-01-31_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad/wrfout_d01_2013-01-31_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad/wrfout_d01_2013-02-01_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad/wrfout_d01_2013-02-01_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad/wrfout_d01_2013-02-02_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad/wrfout_d01_2013-02-02_12:00:00
+G4130131_adapt_notch_CBO5_mod_Mad/wrfout_d01_2013-02-03_00:00:00
+G4130131_adapt_notch_CBO5_mod_Mad/wrfout_d01_2013-02-03_12:00:00
+Includes/namelist.inc
+G4130131_adapt_notch_RACM/wrfout_d01_2013-01-31_00:00:00
+G4130131_adapt_notch_RACM/wrfout_d01_2013-01-31_12:00:00
+G4130131_adapt_notch_RACM/wrfout_d01_2013-02-01_00:00:00
+CAMx_old/run_PA_anlnudge/CAMx6.130117.node15.diag
+CAMx_old/run_PA_anlnudge/CAMx6.130117.node15.out
+CAMx_old/run_PA_anlnudge/CAMx6.130117.node16.diag
+CAMx_old/run_PA_anlnudge/CAMx6.130117.node16.out
+CAMx_old/run_PA_anlnudge/CAMx6.130117.node17.diag
+CAMx_old/run_PA_anlnudge/CAMx6.130117.node17.out
+
+---- Huy run (2015, NOT used) — locate WRF_HUY.*Janfeb15 ----
+HUY/
+HUY/CMAQ.data/
+HUY/CMAQ_DATA/
+HUY/SMOKE.v4.0.data/
+HUY/UBOS2013/
+HUY/old.SMOKE.data.tar.xz
+trang_G3/CAMx_HUY/
+trang_G3/HUY19_ALL/
+trang_G3/HUY19_b1_G12/
+trang_G3/HUY19_b1_G12_cont/
+trang_G3/HUY19_b1_G64/
+trang_G3/HUY19_b2_G04/
+trang_G3/HUY19_b2_G12_cont/
+trang_G3/HUY19_b2_G64/
+trang_G3/HUY19_b3_G12/
+trang_G3/NAM_2019_HUY/
+trang_G3/WPS_HUY2019/
+trang_G3/WPS_HUY2019_modis/
+trang_G3/little_r_obs_huy/
+trang_G4/CAMx_HUY_MODIS/
+trang_G4/WRFOUT_HUY/
+trang_homebk_MAy2021/.custom_Huy.csh
+trang_homebk_MAy2021/CAMx_HUY/
+trang_homebk_MAy2021/CESM.configure_Huy.csh
+trang_homebk_MAy2021/CMAQ.configure_Huy.csh
+trang_homebk_MAy2021/WRF_HUY19/
+trang_homebk_MAy2021/config_cmaq_HUY.csh
+HUY/CMAQ.data/CMAQv5.1/
+HUY/CMAQ.data/How_to_use_gdrive_to_download_from_GDrive
+HUY/CMAQ.data/LOG_RUNS/
+
+══════════════════ D · WRF NAMELIST / FORCING / PHYSICS / LEVELS  (the methods gap) ══════════════════
+
+---- D1 · physics+grid+levels+version straight from a staged wrfout (ncdump -h global attrs) ----
+no wrfout readable here or ncdump missing — skip D1 (module load netcdf-c / nco), covered by D2/D3 instead
+
+---- D2 · find the run namelists (nudging + forcing live here, not in wrfout attrs) ----
+(archive candidates:)
+CAMx.namelist.template
+Includes/namelist.inc
+
+---- D3 · key params from the first namelist.input found (local first, else archive) ----
+no namelist.input found locally or on archive (depth<=5)
+
+---- D4 · forcing dataset hints (namelist.wps prefix / met_em / README / rsl logs) ----
+note: the forcing (GFS/ERA5/FNL/NARR?) is named by the ungrib prefix / Vtable / README — NOT by wrfout.
+      main.tex \dataavailability currently just guesses 'GFS WRF SYNOPTIC HRRR ETC.'
+
+══════════════════ E · brc-wrf repo  (WRF run configs / namelists) ══════════════════
+[MISSING] brc-wrf repo                             /uufs/chpc.utah.edu/common/home/u0737349/brc-wrf
+
+══════════════════ F · cross-check: repo's committed scores vs the CHPC copy (optional) ══════════════════
+[FOUND]   repo scores csv                          /uufs/chpc.utah.edu/common/home/u0737349/gits/lawson-davies-air-wrf-2026/verification/data/baseline_scores_jan1521.csv
+-rw-r--r-- 1 u0737349 lawson 2.3K Jun 30 23:25 /uufs/chpc.utah.edu/common/home/u0737349/gits/lawson-davies-air-wrf-2026/verification/data/baseline_scores_jan1521.csv
+
+══════════════════ SUMMARY — resolved paths (compare against Claude's table) ══════════════════
+archive remotes:     archive: 
+trang WRFOUT:        archive:trang/...   [see section C]
+scratch staging:     /scratch/general/vast/u6060939/wrf_trang_2013   [FOUND]
+brc-tools:           /uufs/chpc.utah.edu/common/home/u0737349/brc-tools   [MISSING]
+brc-wrf:             /uufs/chpc.utah.edu/common/home/u0737349/brc-wrf   [MISSING]
+
+→ paste this output back to Claude, or:  git add chpc_pathcheck_*.log  (as a provenance record)
