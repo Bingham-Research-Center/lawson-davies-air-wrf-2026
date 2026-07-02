@@ -40,16 +40,30 @@ import polars as pl
 
 # Journal style: captions live in the manuscript, so figures carry no titles;
 # panels get letters. PDF (vector) is the LaTeX deliverable, PNG the quick look.
+# Helvetica with per-glyph fallback; fonttype 42 = TrueType so PDF text stays
+# editable/searchable (journals reject Type-3).
 plt.rcParams.update({
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Helvetica", "Helvetica Neue", "Arial", "DejaVu Sans"],
+    "pdf.fonttype": 42,
+    "ps.fonttype": 42,
+    "mathtext.fontset": "stixsans",
     "font.size": 9,
     "axes.labelsize": 9.5,
     "axes.linewidth": 0.8,
-    "xtick.labelsize": 8.5,
-    "ytick.labelsize": 8.5,
+    "xtick.labelsize": 8,
+    "ytick.labelsize": 8,
     "legend.fontsize": 8,
+    "legend.frameon": True,
+    "legend.framealpha": 0.9,
+    "legend.edgecolor": "0.85",
     "xtick.direction": "out",
     "ytick.direction": "out",
 })
+
+# Figures are drawn at TRUE print size (MDPI full text width ~16 cm = 6.3 in) so the
+# point sizes above are what the reader sees; PNGs export at MDPI's 600 dpi minimum.
+FULL_W = 6.3
 
 REPO = Path(__file__).resolve().parents[1]
 DEFAULT_OBS = Path.home() / "brc-tools/data/obs_basin_2013_feb0102.parquet"
@@ -93,6 +107,10 @@ def load(obs_path: Path) -> tuple[pl.DataFrame, dict[str, dict]]:
         r["stid"]: {"name": (r["paper_site"] or r["name"]).split(" (")[0], "elev_m": r["elev_m"]}
         for r in meta.iter_rows(named=True)
     }
+    # Short labels so annotations fit print-width panels.
+    for stid, short in {"USU08": "USU Trailer", "UUT01": "UB Trailer"}.items():
+        if stid in names:
+            names[stid]["name"] = short
     obs = (
         pl.read_parquet(obs_path)
         .with_columns(pl.col("valid_time").dt.offset_by(f"{UTC_TO_MST}h").alias("time_mst"))
@@ -132,17 +150,20 @@ def style_axes(ax) -> None:
 
 
 def save(fig, stem: str) -> None:
-    """PNG for quick viewing/GitHub; vector PDF for the LaTeX manuscript."""
-    for ext, dpi in (("png", 300), ("pdf", None)):
+    """600 dpi PNG (MDPI submission minimum); vector PDF for the LaTeX draft."""
+    for ext, dpi in (("png", 600), ("pdf", None)):
         fig.savefig(OUT / f"{stem}.{ext}", dpi=dpi, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {stem}.png + .pdf")
 
 
 def panel_letter(ax, letter: str, extra: str = "") -> None:
-    ax.text(0.02, 0.98, f"({letter})" + (f" {extra}" if extra else ""),
-            transform=ax.transAxes, va="top", ha="left", fontsize=9,
-            fontweight="bold" if not extra else "normal", color="0.15")
+    """Bold lowercase (a) top-left (AMS/ACP convention), optional regular text after."""
+    t = ax.text(0.03, 0.97, f"({letter})", transform=ax.transAxes,
+                va="top", ha="left", fontsize=9, fontweight="bold", color="0.15")
+    if extra:
+        ax.annotate(extra, xycoords=t, xy=(1, 0), xytext=(3, 0),
+                    textcoords="offset points", va="bottom", fontsize=8, color="0.25")
 
 
 def shade_nights(ax, t_min, t_max) -> None:
@@ -157,7 +178,8 @@ def shade_nights(ax, t_min, t_max) -> None:
 
 
 def fig_theta_profiles(hourly: pl.DataFrame, names: dict) -> None:
-    fig, axes = plt.subplots(2, 3, figsize=(11, 6.8), sharex=True, sharey=True)
+    fig, axes = plt.subplots(2, 3, figsize=(FULL_W, 4.5), sharex=True, sharey=True,
+                             layout="constrained")
     for ax, snap, letter in zip(axes.flat, SNAPSHOTS_MST, "abcdef"):
         t = pl.Series([snap]).str.to_datetime("%Y-%m-%d %H:%M")[0]
         prof = (
@@ -174,15 +196,15 @@ def fig_theta_profiles(hourly: pl.DataFrame, names: dict) -> None:
         elev = [names[s]["elev_m"] for s in prof["stid"]]
         ax.plot(prof["theta"], elev, color="0.45", lw=1.2, zorder=1)
         for i, (th, ev, st) in enumerate(zip(prof["theta"], elev, prof["stid"])):
-            ax.scatter(th, ev, s=42, color=elev_color(ev), zorder=2, edgecolor="white", lw=0.6)
+            ax.scatter(th, ev, s=26, color=elev_color(ev), zorder=2, edgecolor="white", lw=0.5)
             if snap == SNAPSHOTS_MST[0]:
                 # Stations cluster near 1550-1620 m; alternate label side and add a small
                 # offset so names are less likely to collide.
                 side = 1 if i % 2 == 0 else -1
                 ax.annotate(
                     names[st]["name"], (th, ev),
-                    xytext=(8 * side, 4 * side), textcoords="offset points",
-                    fontsize=7, color="0.25", va="center",
+                    xytext=(6 * side, 3 * side), textcoords="offset points",
+                    fontsize=6.5, color="0.25", va="center",
                     ha="left" if side > 0 else "right",
                 )
         hh = t.strftime("%H:%M")
@@ -194,19 +216,18 @@ def fig_theta_profiles(hourly: pl.DataFrame, names: dict) -> None:
         ax.set_ylabel("Station elevation (m)")
     for ax in axes[1, :]:
         ax.set_xlabel("Potential temperature θ (K)")
-    fig.tight_layout()
     save(fig, "obs_theta_profiles_feb0102")
 
 
 def fig_temp_timeseries(hourly: pl.DataFrame, names: dict) -> None:
-    fig, ax = plt.subplots(figsize=(9, 3.8))
+    fig, ax = plt.subplots(figsize=(FULL_W, 2.9), layout="constrained")
     t_min, t_max = hourly["hour_mst"].min(), hourly["hour_mst"].max()
     shade_nights(ax, t_min, t_max)
     for st, ls in zip(TS_STATIONS, TS_STYLES):
         d = hourly.filter((pl.col("stid") == st) & pl.col("temp_2m").is_not_null())
         ev = names[st]["elev_m"]
         ax.plot(
-            d["hour_mst"], d["temp_2m"], ls, color=elev_color(ev), lw=1.6,
+            d["hour_mst"], d["temp_2m"], ls, color=elev_color(ev), lw=1.3,
             label=f"{names[st]['name']} ({ev:.0f} m)",
         )
     ax.axhline(0.0, color="0.7", lw=0.8, zorder=1)
@@ -217,10 +238,8 @@ def fig_temp_timeseries(hourly: pl.DataFrame, names: dict) -> None:
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
     ax.xaxis.set_minor_locator(mdates.HourLocator(byhour=[12]))
     ax.tick_params(axis="x", which="major", length=7)
-    ax.legend(loc="upper left", framealpha=0.95, title="Station (elevation)",
-              title_fontsize=8)
+    ax.legend(loc="upper left", title="Station (elevation)", title_fontsize=8)
     style_axes(ax)
-    fig.tight_layout()
     save(fig, "obs_temp_timeseries_feb0102")
 
 
@@ -258,12 +277,13 @@ def fig_inversion_index(hourly: pl.DataFrame, names: dict) -> None:
     if hd.is_empty():
         raise ValueError("No heat-deficit profiles computed (need >=5 theta stations incl. USU03).")
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 5.6), sharex=True)
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(FULL_W, 4.2), sharex=True,
+                                   layout="constrained")
     t_min, t_max = hourly["hour_mst"].min(), hourly["hour_mst"].max()
     for ax in (ax1, ax2):
         shade_nights(ax, t_min, t_max)
 
-    ax1.plot(dth["hour_mst"], dth["dtheta"], color="#00224e", lw=1.6)
+    ax1.plot(dth["hour_mst"], dth["dtheta"], color="#00224e", lw=1.3)
     ax1.axhline(8.0, color="0.4", lw=1.0, ls="--")
     ax1.annotate("8 K CAP threshold", xy=(0.99, 8.0), xycoords=("axes fraction", "data"),
                  xytext=(0, -10), textcoords="offset points", fontsize=8, color="0.35",
@@ -275,7 +295,7 @@ def fig_inversion_index(hourly: pl.DataFrame, names: dict) -> None:
     panel_letter(ax1, "a")
     style_axes(ax1)
 
-    ax2.plot(hd["hour_mst"], hd["heat_deficit"], color="#5f636f", lw=1.6)
+    ax2.plot(hd["hour_mst"], hd["heat_deficit"], color="#5f636f", lw=1.3)
     ax2.set_ylabel("Valley heat deficit (MJ m⁻²)")
     ax2.set_xlabel("Local time (MST); shaded = night")
     ax2.set_xlim(t_min, t_max)
@@ -284,7 +304,6 @@ def fig_inversion_index(hourly: pl.DataFrame, names: dict) -> None:
     panel_letter(ax2, "b")
     style_axes(ax2)
 
-    fig.tight_layout()
     save(fig, "obs_inversion_index_feb0102")
 
 
