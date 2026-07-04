@@ -119,7 +119,7 @@ def fig_xsect(files, cells, km, run, want_times, out_dir, endpoints) -> None:
         ax.contour(km2d, z_s, th_s, levels=levels[::4], colors="k", linewidths=0.3)
         ax.fill_between(km, 0, terr, color="0.15", zorder=3)
         ax.set_ylim(terr.min() - 50, Z_TOP)
-        ax.set_title(f"{t:%d %b %H:%M} UTC", fontsize=10)
+        ax.set_title(f"{run} — {t:%d %b %H:%M} UTC", fontsize=10)
     for ax in axes.flat[len(panels):]:
         ax.set_visible(False)
     for ax in axes[:, 0]:

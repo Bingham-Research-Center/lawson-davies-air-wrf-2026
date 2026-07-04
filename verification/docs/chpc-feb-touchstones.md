@@ -87,3 +87,23 @@ overlay figures (verification/data/figures/). Both pipelines are smoke-tested gr
 (`smoke_test_runs_feb0102.py`, `smoke_test_cross_sections.py`) — synthetic fixtures,
 so the first real-data run should still be eyeballed against the QC list in
 `docs/how-to-obs-verify.md` (actual-T-not-potential, 1-h offset, units/sign/axis).
+
+## Session notes (2026-07-03, first real pass)
+
+- Archive actually lives at `/uufs/chpc.utah.edu/common/home/lawson-group6/jrlawson/wrf_archive`
+  (not `~jrlawson`). Four `*333m*` dirs; `pelican2013_rap_...` has 0 wrfouts (skip). Wrfouts sit
+  under `full6h/run_<stamp>/`, NOT the dir root; the nam dir also has a `smoke6h` test run (skip).
+- Runs are 6-h forecasts: wrfout_d0{2,3} hourly, 2013-02-02 12:00-18:00 UTC only. First ~2 h are
+  spin-up (visible as blocky IC noise in the GFS t=0 fields) — score with
+  `--min-time 2013-02-02T14:00 --out-suffix _postspinup`, and pass the cross-section script
+  `--times 2013-02-02_16:00:00` rather than the frame-zero default.
+- **The 333 m nest (d03, ~50x48 km) excludes the bench stations** — 7 of 11 stations clamp to its
+  boundary. d02 (1 km) covers all 11 (USU03 terrain 2222 m vs real 2228 m) → d02 is the comparison
+  domain; d03 is interior-only (USU07/USU02/USU08/KVEL) resolution sensitivity.
+- Python env: `~/.conda/envs/wrfpost/bin/python` has the full stack (xarray/netCDF4/pandas/
+  matplotlib). `conda activate` fails on compute nodes without the shell hook — call the env's
+  python directly. Scripts pull cleanly via `git clone -b wrf-run-pipeline-feb2013 <repo> ~/wrfpaper`
+  (works on notch nodes; no scp needed).
+- Staged copies: `/scratch/general/vast/u6060939/wrf_touchstones_2013/{gfs_2way,nam_2way,nam_1way}`
+  (60-day purge); durable bundle of reduced CSVs + figures:
+  `lawson-group6/u6060939/wrf_touchstones_2013_reduced/touchstones_reduced.tgz`.

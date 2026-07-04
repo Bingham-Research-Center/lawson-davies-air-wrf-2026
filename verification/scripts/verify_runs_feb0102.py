@@ -16,6 +16,7 @@ Run:
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
 from pathlib import Path
 
 import polars as pl
@@ -49,7 +50,13 @@ def main() -> None:
                     help="Feb 1-2 2013 obs parquet (local cache)")
     ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT,
                     help="where the scores + spread csv tables go")
+    ap.add_argument("--min-time", default=None,
+                    help="drop WRF rows before this valid time (spin-up exclusion), "
+                         "e.g. 2013-02-02T14:00")
+    ap.add_argument("--out-suffix", default="",
+                    help="suffix for the output csv names, e.g. _postspinup")
     args = ap.parse_args()
+    min_time = datetime.fromisoformat(args.min_time) if args.min_time else None
 
     obs = _read(args.obs)
     if "waypoint" not in obs.columns and "stid" in obs.columns:
@@ -60,6 +67,8 @@ def main() -> None:
     per_run = []
     for path in args.wrf:
         nwp = _read(path)
+        if min_time is not None:
+            nwp = nwp.filter(pl.col("valid_time") >= min_time)
         label = run_label(nwp, path)
         present = [v for v in VARIABLES if v in nwp.columns and v in obs.columns]
         scores = paired_scores(nwp.drop("run", strict=False), obs,
@@ -86,11 +95,11 @@ def main() -> None:
             print(spread)
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
-    scores_out = args.out_dir / "wrf_runs_scores_feb0102.csv"
+    scores_out = args.out_dir / f"wrf_runs_scores_feb0102{args.out_suffix}.csv"
     scores.write_csv(scores_out)
     print(f"\nwrote {scores_out}")
     if len(args.wrf) > 1:
-        spread_out = args.out_dir / "wrf_runs_spread_feb0102.csv"
+        spread_out = args.out_dir / f"wrf_runs_spread_feb0102{args.out_suffix}.csv"
         spread.write_csv(spread_out)
         print(f"wrote {spread_out}")
 
