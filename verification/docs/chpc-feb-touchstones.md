@@ -130,3 +130,13 @@ so the first real-data run should still be eyeballed against the QC list in
   same sheet if wanted (~20 min).
 - Cross-section snapshots regenerated at 2013-02-02_16:00 UTC (post-spin-up) for the three
   touchstones (`*_d02_16z`) — use these, not the frame-zero originals.
+
+## Session notes (2026-07-04, upper-air)
+
+- `plot_wrf_upper_air.py` run on the touchstone d02s at 14 + 16 UTC, 700 + 500 hPa
+  (`wrf_upper_*` figures). Finding: **at 500 hPa GFS and NAM agree** (±0.5 K, converged by
+  16 UTC — the IC convergence John saw), but **at 700 hPa GFS stays a coherent +1.5–2 K warmer
+  basin-wide** through the window. The residual driving-analysis disagreement sits in the
+  lower troposphere — the layer that governs cold-pool maintenance — and belongs to the run
+  with the weaker simulated CAP. Mechanism (inherited profile vs CAP-top entrainment) TBD.
+- 700 hPa is below ground over the high Uintas (masked white) — expected, not a bug.
