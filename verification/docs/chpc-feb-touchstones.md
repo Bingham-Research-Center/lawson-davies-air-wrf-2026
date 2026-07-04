@@ -107,3 +107,26 @@ so the first real-data run should still be eyeballed against the QC list in
 - Staged copies: `/scratch/general/vast/u6060939/wrf_touchstones_2013/{gfs_2way,nam_2way,nam_1way}`
   (60-day purge); durable bundle of reduced CSVs + figures:
   `lawson-group6/u6060939/wrf_touchstones_2013_reduced/touchstones_reduced.tgz`.
+
+## Session notes (2026-07-04, Tran-runs comparison)
+
+- Tran's archived WRF runs live in the group's rclone `archive:` remote (S3; ask John/Loknath
+  for access) — `trang/WRFOUT/WRF_TRANG_frozone/WRF_anlnudge` (Jan 15-21 2013, the previously
+  scored baseline window) and `trang_G5/WRF_SIP/` (the FDDA-study suite for the Jan 29-Feb 12
+  episode: `REF_long` reference run + nudging-coefficient / land-use / vertical-level variants,
+  plus a `namelists` dir). Her config (kept out of this public repo; see local copies):
+  12 / 4 / 1.33 km one-way nests, 37 levels, MYJ PBL + Noah LSM + Thompson mp + RRTMG,
+  continuous multi-week episode runs — a setup built to drive AQ modeling, with FDDA as the
+  designed correction, vs our 75-level 3 / 1 / 0.333 km short-forecast touchstones.
+- `REF_long` d03 (1.33 km) covers our Feb 1-2 case → direct same-case comparison
+  (`wrf_trang_ref_per_station.csv`, `*_withtrang` score tables). On 14-18 UTC Feb 2 the
+  un-nudged reference shows a -4.4 C 2 m T bias (cold, strongest midday) with a deeper/colder
+  CAP than observed — consistent with the motivation for FDDA documented in Tran (2018), and a
+  different error direction than the Jan 15-21 anlnudge baseline (+4-6 C warm). Together: the
+  un-nudged errors are episode- and config-dependent in both sign and size, which is the gap
+  the short-forecast approach targets.
+- Fair-comparison caveat: one 6-h window vs multi-week continuous runs; her best *nudged*
+  variant (e.g. `REF_long_0.00008forT`) is the appropriate skill anchor — reduce it with this
+  same sheet if wanted (~20 min).
+- Cross-section snapshots regenerated at 2013-02-02_16:00 UTC (post-spin-up) for the three
+  touchstones (`*_d02_16z`) — use these, not the frame-zero originals.
