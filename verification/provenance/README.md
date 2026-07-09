@@ -18,6 +18,10 @@ config that produced the runs.
   fingerprints. Run it via `CHPC-WRF-INVENTORY-HANDOFF.md`.
 - `namelist_candidates.txt` — the `namelist.input` candidates surfaced from the archive
   (raw config to reconcile against the runs before it enters Methods).
+- `CHPC-WRF-INVENTORY-RESULTS.md` — summary of running the inventory (checksum, per-tree
+  counts, config labels, header coverage) to reconcile against the run lookup table. The
+  full report tarball is transferred out-of-band, not committed (raw archive listings /
+  namelist contents kept out of this public repo).
 
 ## Running (on CHPC)
 ```sh
@@ -32,3 +36,5 @@ Run logs (`*.log`, `*.log.txt`) are gitignored — large raw dumps, not tracked.
 Candidate namelists are recovered but **not yet reconciled** against the actual runs — verify
 forcing / scheme / level / `dx` / nudging / window against the run output before citing in
 Methods (flagged in `main.tex`).
+As of 2026-07-09 the full inventory (`CHPC-WRF-INVENTORY-RESULTS.md`) is generated and
+awaiting that reconciliation.
