@@ -120,12 +120,112 @@ sonde profiles to constrain the vertical structure, as a meteorological
 basis for subsequent photochemical modeling]. [State principal findings.]
 
 \section{Materials and Methods}
-% Model configuration, domains, data sources, evaluation approach.
-% Disclose any GenAI use here if applicable.
+% DRAFT scaffold (JRL, 2026-07). Structure + placeholders for the Feb 1-2 2013
+% touchstone experiment. Reconcile every configuration value against the recovered
+% namelist (verification/provenance/namelist_candidates.txt) and the run namelists
+% before submission.
+
+\subsection{WRF model configuration}
+% Reconcile against verification/provenance/namelist_candidates.txt before citing.
+We simulate the 1--2 February 2013 cold-air-pool episode with the Advanced
+Research WRF model \citep{skamarock2021wrf}.
+[TODO: model version.]
+The configuration uses three nested domains at 3, 1, and 0.333~km horizontal
+grid spacing
+[TODO: confirm nesting ratios and one-/two-way settings]
+with 75 vertical levels
+[TODO: confirm model top and level distribution].
+Physics follow the Uinta Basin cold-air-pool lineage
+\citep{neemann2015,tran2018}:
+[TODO: PBL, land-surface, microphysics, radiation, and surface-layer schemes
+from the recovered namelist].
+
+\subsection{Initial and boundary conditions}
+The touchstone runs are driven by two operational analyses --- the Global
+Forecast System \citep{ncep2019gfs} and the North American Mesoscale model ---
+to bracket the initial-condition uncertainty that dominates cold-pool forecasts.
+[TODO: forcing resolution, cycle, and spin-up window.]
+
+\subsection{Numerical experiments}
+% The three "touchstone" runs + the Tran same-case reference.
+We evaluate three short-forecast touchstone runs that isolate the driving
+analysis and nest feedback: GFS-driven two-way nesting, NAM-driven two-way
+nesting, and NAM-driven one-way nesting.
+[TODO: forecast length, valid window, and the rationale for short forecasts.]
+For a same-case comparison against the established nudging approach, we reduce
+the un-nudged reference run of \citet{tran2018} over the identical window
+[TODO: identify the specific run and configuration].
+
+\subsection{Observations and evaluation}
+% Station selection + scoring pipeline in verification/; stations_2013_selection.csv.
+Model output is evaluated against surface observations at [TODO: N] Uinta Basin
+stations selected to match the \citet{tran2018} evaluation sites
+[TODO: describe the selection and quality-control gate].
+We compare 2~m temperature, 10~m wind, and surface pressure, and quantify
+cold-pool strength as the bench-minus-floor potential-temperature difference.
+Skill scores (bias, MAE, RMSE, correlation) and the across-run spread are
+computed with the pipeline archived under \texttt{verification/}.
+[TODO: state the comparison domain --- the 1~km nest, since the 0.333~km nest
+excludes most bench stations.]
+
+\subsection{Use of generative artificial intelligence}
+% MDPI requires disclosure; edit to match actual usage before submission.
+During the preparation of this work the authors used Claude (Anthropic) to
+assist with drafting scaffolding, figure-generation code, and language editing.
+The authors reviewed and edited all content and take full responsibility for
+the published article.
 
 \section{Results}
+% DRAFT scaffold from the Feb 1-2 touchstone pipeline (PR #12). Headline numbers
+% are first-pass (verification/data/wrf_runs_scores_feb0102*.csv) --- verify against
+% final run output before submission. Figures live in verification/data/figures/;
+% copy chosen panels into figures/ and log them in figures/SOURCES.md when wiring in.
 
-\subsection{Subsection}
+\subsection{The observed cold-air pool}
+% Supporting figs: obs_temp_timeseries_feb0102, obs_theta_profiles_feb0102, obs_inversion_index_feb0102
+[TODO: describe the observed 1--2 February episode --- surface cooling, the
+potential-temperature profiles, and the bench-minus-floor inversion index the
+runs must reproduce.]
+
+\subsection{Surface skill and inter-run spread}
+% Supporting: wrf_temp_timeseries_feb0102; wrf_runs_scores_feb0102_postspinup*.csv, wrf_runs_spread_feb0102*.csv
+Post-spin-up (14--18~UTC 2~February), the NAM-driven runs reproduce 2~m
+temperature better than the GFS-driven run
+[DRAFT: NAM $+0.46$~$^{\circ}$C bias, MAE 2.3; GFS $+1.75$~$^{\circ}$C, MAE 3.3],
+both far closer than the January baseline's $+4$ to $+6$~$^{\circ}$C warm bias.
+The one- and two-way NAM runs are near-identical, so the skill-relevant spread
+is GFS versus NAM --- an initial-condition signal.
+
+\subsection{Cold-pool maintenance}
+% Supporting: wrf_inversion_index_feb0102; wrf_xsect_theta_*_d02_16z; wrf_timeheight_theta_*
+Both NAM runs track the observed inversion, holding the cold pool above the
+[DRAFT: 8~K] bench-minus-floor threshold, whereas the GFS run underpredicts the
+inversion by [DRAFT: 6--8~K] and mixes it out.
+[TODO: cross-sections and time--height along the floor-to-bench transect.]
+
+\subsection{Upper-air driving analysis}
+% Supporting: wrf_upper_500hPa_*_d02, wrf_upper_700hPa_*_d02, wrf_upper_*_minus_* diff panels
+At 500~hPa the GFS and NAM analyses converge by 16~UTC, but at 700~hPa the GFS
+retains a coherent [DRAFT: $+1.5$ to $+2$~K] basin-wide warm layer through the
+window, placing the residual disagreement in the lower troposphere that governs
+cold-pool maintenance.
+[TODO: mechanism --- inherited profile vs.\ cold-pool-top entrainment.]
+
+\subsection{Same-case comparison with the nudged reference}
+% Supporting: wrf_xsect_theta_trang_ref; wrf_trang_ref_per_station.csv, *_withtrang score tables
+Over the identical 14--18~UTC window, the un-nudged reference run of
+\citet{tran2018} runs [DRAFT: $-4.4$~$^{\circ}$C] cold with a
+deeper-than-observed cold pool --- an error opposite in sign to the January
+nudged baseline, and the gap that both nudging and the short-forecast approach
+target.
+[TODO: fair-comparison caveat --- one 6~h window vs.\ multi-week continuous runs.]
+
+% --- First figure to wire in (copy into figures/, log in SOURCES.md, then uncomment) ---
+% \begin{figure}[H]
+% \includegraphics[width=0.9\linewidth]{figures/wrf_temp_timeseries_feb0102.png}
+% \caption{Observed vs.\ simulated 2~m temperature at the floor-to-bench stations,
+% 1--2 February 2013; the shaded band is the across-run spread.\label{fig:wrf-temp}}
+% \end{figure}
 
 % --- Figure scaffold ---
 % \begin{figure}[H]
