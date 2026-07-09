@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
-"""Reduce Trang's 2013 baseline WRF (d03) to per-station hourly series for verification.
+"""Reduce a 2013-case WRF run (innermost domain) to per-station hourly series.
 
-Reads the staged ``wrfout_d03`` files, finds the nearest d03 grid cell to each Basin obs
-station (via XLAT/XLONG), extracts surface met, **rotates 10 m winds to earth-relative**
+Reads staged ``wrfout`` files, finds the nearest grid cell to each Basin obs station
+(via XLAT/XLONG), extracts surface met, **rotates 10 m winds to earth-relative**
 (COSALPHA/SINALPHA — wrfout U10/V10 are grid-relative), derives wind speed/direction, and
 writes a tidy per-station hourly frame keyed ``(waypoint, valid_time)`` — the ``nwp_df``
 that ``brc_tools.verify.paired_scores()`` expects.
+
+Stations come from ``verification/data/stations_2013_selection.csv`` (rows with
+``in_case_window=true``; pass ``--stations`` if the CSV lives elsewhere). ``--run-label``
+names the run (e.g. gfs_2way / nam_2way / nam_1way); it becomes a ``run`` column and the
+default output filename, so the three touchstone runs reduce with the same command.
 
 Output units match the lookups.toml aliases so ``harmonize=True`` converts correctly:
     temp_2m = K, pressure_surface = Pa, wind_speed_10m = m/s, wind_dir_10m = deg, q2 = kg/kg.
@@ -24,15 +29,14 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-# 2013-era Basin stations (lat, lon) — from obs_basin_2013_jan1521.parquet.
-STATIONS = {
-    "USU01": (39.98130, -109.34540),
-    "USU05": (40.06700, -110.15100),
-    "USU08": (40.14370, -109.46718),
-    "KVEL":  (40.44295, -109.51273),
-    "QV4":   (40.46472, -109.56083),
-    "QRS":   (40.29430, -110.00900),
-}
+DEFAULT_STATIONS_CSV = Path(__file__).resolve().parents[1] / "data" / "stations_2013_selection.csv"
+
+
+def load_stations(csv_path: Path) -> dict[str, tuple[float, float]]:
+    """stid -> (lat, lon) for stations reporting in the case window."""
+    meta = pd.read_csv(csv_path)
+    meta = meta[meta["in_case_window"]]
+    return {r.stid: (float(r.latitude), float(r.longitude)) for r in meta.itertuples()}
 
 
 def _decode_time(row) -> str:
@@ -51,10 +55,18 @@ def nearest_cell(xlat, xlon, lat0, lon0):
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--wrf-dir", default="/scratch/general/vast/u6060939/wrf_trang_2013")
-    ap.add_argument("--glob", default="wrfout_d03_2013-01-*")
+    ap.add_argument("--wrf-dir", required=True, help="directory holding the run's wrfout files")
+    ap.add_argument("--run-label", required=True,
+                    help="run name for the output (e.g. gfs_2way, nam_2way, nam_1way, trang)")
+    ap.add_argument("--glob", default="wrfout_d03_2013-0[12]-*",
+                    help="wrfout pattern; d03 = innermost of the triple nest (override per run layout)")
+    ap.add_argument("--stations", type=Path, default=DEFAULT_STATIONS_CSV,
+                    help="stations_2013_selection.csv (copied next to this script on CHPC is fine)")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
+
+    stations = load_stations(args.stations)
+    print(f"{len(stations)} stations from {args.stations}")
 
     files = sorted(f for f in glob.glob(str(Path(args.wrf_dir) / args.glob))
                    if not f.endswith(".nc"))
@@ -68,8 +80,8 @@ def main() -> None:
     xlon = np.asarray(ds0["XLONG"].isel(Time=0))
     hgt = np.asarray(ds0["HGT"].isel(Time=0))
     cells = {}
-    print("station -> nearest d03 cell:")
-    for stid, (lat0, lon0) in STATIONS.items():
+    print("station -> nearest grid cell:")
+    for stid, (lat0, lon0) in stations.items():
         j, i = nearest_cell(xlat, xlon, lat0, lon0)
         cells[stid] = (j, i)
         print(f"  {stid}: (j={j}, i={i})  grid {xlat[j,i]:.4f},{xlon[j,i]:.4f}  "
@@ -97,6 +109,7 @@ def main() -> None:
             wdir = (270.0 - np.rad2deg(np.arctan2(ve, ue))) % 360.0
             for k in range(len(valid)):
                 rows.append({
+                    "run": args.run_label,
                     "waypoint": stid,
                     "valid_time": valid[k],
                     "temp_2m": float(t2[k]),
@@ -111,7 +124,7 @@ def main() -> None:
     df = (pd.DataFrame(rows)
             .sort_values(["waypoint", "valid_time"])
             .reset_index(drop=True))
-    out = args.out or str(Path(args.wrf_dir) / "wrf_trang_2013_per_station.csv")
+    out = args.out or str(Path(args.wrf_dir) / f"wrf_{args.run_label}_per_station.csv")
     df.to_csv(out, index=False)
     n_sta = df["waypoint"].nunique()
     print(f"\nwrote {len(df)} rows ({n_sta} stations) -> {out}")
