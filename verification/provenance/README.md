@@ -13,6 +13,9 @@ config that produced the runs.
 - `chpc_wrf_provenance.sh` — targeted dig of the archive subtrees that hold the run config,
   extracting the Methods-relevant settings. Read-only except an optional, size-capped,
   auto-deleted single-`wrfout` fallback download used only when no `namelist.input` is found.
+- `chpc_wrf_publication_inventory.sh` — read-only manifests for the Trang/OSIP archive trees,
+  exact paths for John's touchstones, candidate-config hashes, and optional local wrfout-header
+  fingerprints. Run it via `CHPC-WRF-INVENTORY-HANDOFF.md`.
 - `namelist_candidates.txt` — the `namelist.input` candidates surfaced from the archive
   (raw config to reconcile against the runs before it enters Methods).
 
