@@ -28,5 +28,8 @@
 ## Obs data — bulk timeseries kept LOCAL, never committed (small result/score CSVs stay tracked)
 *.parquet
 
+## CHPC provenance run logs — large raw dumps kept out of the repo (see verification/provenance/)
+*.log.txt
+
 ## Python bytecode
 __pycache__/
