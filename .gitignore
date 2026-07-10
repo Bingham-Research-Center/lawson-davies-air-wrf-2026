@@ -31,5 +31,9 @@
 ## CHPC provenance run logs — large raw dumps kept out of the repo (see verification/provenance/)
 *.log.txt
 
+## CHPC provenance inventory tarballs — evidence archive kept LOCAL, never committed to the public repo
+## (regenerate with verification/provenance/chpc_wrf_provenance.sh; see CHPC-WRF-INVENTORY-RESULTS.md)
+wrf_provenance_*.tgz
+
 ## Python bytecode
 __pycache__/
