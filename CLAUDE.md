@@ -9,6 +9,22 @@ official MDPI LaTeX template. Public repo under `Bingham-Research-Center`. Coaut
 - `references.bib` — bib database, **currently unused** (see Bibliography).
 - `figures/SOURCES.md` — where each figure came from (CHPC scripts/data).
 
+## Data, provenance & verification
+- `verification/` — the 2013 evaluation pipeline (`scripts/`), per-station scores (`data/*.csv`), and
+  figures. `baseline-eval-2013.md` = the Jan 15–21 nudged-run eval; the Feb 1–2 touchstone scores are
+  `data/wrf_runs_scores_feb0102*.csv`.
+- `verification/provenance/WRF-RUN-TO-REPORT-MAP.md` — which archived CHPC WRF run belongs to which
+  paper/report (Trang/Huy Tran; SIP/OSIP lineage). Open/closed questions in its §8.
+- `opinion-opus-data.md` (root) — **resolved baseline question:** the same-case baseline is the
+  un-nudged `trang_ref` (a SIP re-run, config *after* Tran 2018) — **not** the Jan `anlnudge` run and
+  **not** the 2018 paper's own file; our config spread (~6.8 °C) ≈ Tran-2018's nudging spread (5.5 °C).
+  Read before touching any baseline/Tran wording in `main.tex`.
+- Off-repo: `~/reviews/tran-2018-fdda/` — full paper extraction + journal-club critique (the Tran
+  Table 1 numbers). Bulk WRF output and the provenance tarball (`wrf_provenance_*.tgz`) stay LOCAL,
+  never committed (public repo).
+- Attribution fingerprint: 75-lev · 3/1/0.333 km = JRL's own runs; 37/42-lev · 12/4/1.333 km =
+  Trang/Huy. `trang_*` folders are storage buckets, not authorship.
+
 ## Do NOT ingest (cold-start cost)
 - `Definitions/**` — vendored MDPI template (~1.3 MB: `mdpi.cls`, `mdpi*.bst`, `mdpi_apacite.sty`,
   `journalnames.tex`, logos). Don't read unless debugging a LaTeX class/style error. This is the
